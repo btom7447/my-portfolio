@@ -1,0 +1,41 @@
+{
+  "name": "software-portfolio",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "generate:types": "payload generate:types",
+    "generate:importmap": "payload generate:importmap"
+  },
+  "dependencies": {
+    "@gsap/react": "^2.1.2",
+    "@payloadcms/db-postgres": "^3.81.0",
+    "@payloadcms/next": "^3.81.0",
+    "@payloadcms/richtext-lexical": "^3.81.0",
+    "@payloadcms/storage-vercel-blob": "^3.81.0",
+    "@payloadcms/ui": "^3.81.0",
+    "@vercel/blob": "^2.3.3",
+    "framer-motion": "^12.38.0",
+    "gsap": "^3.14.2",
+    "next": "16.2.2",
+    "payload": "^3.81.0",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "resend": "^6.10.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "cross-env": "^10.1.0",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.2",
+    "sharp": "^0.34.5",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
