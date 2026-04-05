@@ -20,5 +20,10 @@ export async function GET() {
     createdAt: doc.createdAt,
   }))
 
-  return NextResponse.json({ media: summary })
+  const token = process.env.BLOB_READ_WRITE_TOKEN
+  return NextResponse.json({
+    blobToken: token ? `${token.slice(0, 20)}...` : 'NOT SET',
+    blobTokenLength: token?.length ?? 0,
+    media: summary,
+  })
 }
