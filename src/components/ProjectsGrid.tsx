@@ -103,7 +103,6 @@ export function ProjectsGrid({ projects }: { projects: Project[] }) {
                 summary={project.summary}
                 category={project.category}
                 coverImage={project.coverImage}
-                techStack={project.techStack}
                 tags={project.tags}
                 deviceFrameType={project.deviceFrameType || 'browser'}
                 projectStatus={project.projectStatus}

@@ -75,7 +75,6 @@ export function ProjectFilter({ projects }: { projects: Project[] }) {
                   summary={project.summary}
                   category={project.category}
                   coverImage={project.coverImage}
-                  techStack={project.techStack}
                   tags={project.tags}
                   deviceFrameType={project.deviceFrameType}
                   projectStatus={project.projectStatus}

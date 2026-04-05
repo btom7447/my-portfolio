@@ -54,7 +54,6 @@ export default buildConfig({
     vercelBlobStorage({
       collections: {
         media: {
-          disablePayloadAccessControl: true,
           prefix: 'media',
         },
       },

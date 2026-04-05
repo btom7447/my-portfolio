@@ -31,7 +31,6 @@ export const Experience: CollectionConfig = {
     {
       name: 'startDate',
       type: 'date',
-      required: true,
       admin: {
         date: {
           pickerAppearance: 'monthOnly',
