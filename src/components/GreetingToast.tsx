@@ -42,17 +42,17 @@ export function GreetingToast() {
           transition={{ duration: 0.3 }}
           className="fixed left-1/2 top-20 z-40 -translate-x-1/2"
         >
-          <div className="flex items-center gap-3 rounded-full border border-border bg-background/90 px-5 py-2.5 shadow-lg backdrop-blur-md">
-            <span className="text-sm font-medium text-foreground">{greeting}</span>
+          <div className="flex items-center gap-2 whitespace-nowrap rounded-full border border-border bg-background/90 px-3 py-2 shadow-lg backdrop-blur-md sm:gap-3 sm:px-5 sm:py-2.5">
+            <span className="text-xs font-medium text-foreground sm:text-sm">{greeting}</span>
             {subtitle && (
               <>
-                <span className="h-3 w-px bg-border" />
-                <span className="max-w-48 truncate text-xs text-muted">{subtitle}</span>
+                <span className="hidden h-3 w-px bg-border sm:block" />
+                <span className="hidden max-w-48 truncate text-xs text-muted sm:block">{subtitle}</span>
               </>
             )}
             <button
               onClick={() => setDismissed(true)}
-              className="ml-1 flex h-4 w-4 items-center justify-center rounded-full text-muted transition-colors hover:text-foreground"
+              className="ml-1 flex h-4 w-4 shrink-0 items-center justify-center rounded-full text-muted transition-colors hover:text-foreground"
               aria-label="Dismiss"
             >
               <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
