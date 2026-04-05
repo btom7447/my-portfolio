@@ -7,10 +7,15 @@ import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import sharp from 'sharp'
 
 import { Projects } from './collections/Projects'
-import { TechStack } from './collections/TechStack'
+import { Certifications } from './collections/Certifications'
+import { Testimonials } from './collections/Testimonials'
+import { Experience } from './collections/Experience'
 import { Media } from './collections/Media'
 import { Users } from './collections/Users'
 import { SiteSettings } from './globals/SiteSettings'
+import { HomePage } from './globals/HomePage'
+import { AboutPage } from './globals/AboutPage'
+import { SecretPage } from './globals/SecretPage'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -21,9 +26,19 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    meta: {
+      titleSuffix: ' — Portfolio CMS',
+      icons: [
+        {
+          url: '/logo.png',
+          type: 'image/png',
+        },
+      ],
+    },
+    avatar: 'default',
   },
-  collections: [Users, Media, Projects, TechStack],
-  globals: [SiteSettings],
+  collections: [Users, Media, Projects, Certifications, Testimonials, Experience],
+  globals: [SiteSettings, AboutPage, HomePage, SecretPage],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

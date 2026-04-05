@@ -1,0 +1,31 @@
+/* Portfolio admin theme — purple accent */
+
+/* Override base color palette to use purple instead of blue */
+:root {
+  --color-blue-50: #f5f3ff;
+  --color-blue-100: #ede9fe;
+  --color-blue-150: #ddd6fe;
+  --color-blue-200: #c4b5fd;
+  --color-blue-250: #a78bfa;
+  --color-blue-300: #8b5cf6;
+  --color-blue-350: #7c3aed;
+  --color-blue-400: #6d28d9;
+  --color-blue-450: #5b21b6;
+  --color-blue-500: #4c1d95;
+  --color-blue-550: #3b0764;
+  --color-blue-600: #2e1065;
+  --color-blue-650: #1e0a45;
+  --color-blue-700: #140730;
+  --color-blue-750: #0c0420;
+  --color-blue-800: #080215;
+  --color-blue-850: #05010d;
+  --color-blue-900: #030108;
+  --color-blue-950: #010003;
+  --color-blue-1000: #000000;
+}
+
+/* Focus/accessibility outline in purple */
+[data-theme="dark"],
+[data-theme="light"] {
+  --accessibility-outline: #7c3aed;
+}

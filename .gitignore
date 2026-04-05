@@ -35,9 +35,21 @@ yarn-error.log*
 .env.local
 .env*.local
 
+# uploaded media (stored in Vercel Blob in production)
+/media
+
 # vercel
 .vercel
 
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# AI / Claude
+CLAUDE.md
+AGENTS.md
+.claude/
+
+# editor
+.vscode/
+.idea/

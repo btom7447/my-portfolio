@@ -1,26 +1,133 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
-:root {
+/* ── Light theme (default) ── */
+:root,
+[data-theme="light"] {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #0a0a0a;
+  --muted: #3f3f46;
+  --border: #e4e4e7;
+  --surface: #f4f4f5;
+
+  /* Purple accent scale */
+  --accent: #7c3aed;
+  --accent-light: #a78bfa;
+  --accent-dark: #5b21b6;
+  --accent-subtle: #f5f3ff;
+  --accent-muted: #ede9fe;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-surface: var(--surface);
+  --color-accent: var(--accent);
+  --color-accent-light: var(--accent-light);
+  --color-accent-dark: var(--accent-dark);
+  --color-accent-subtle: var(--accent-subtle);
+  --color-accent-muted: var(--accent-muted);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-space-grotesk);
   --font-mono: var(--font-geist-mono);
 }
 
+/* ── Dark theme ── */
+[data-theme="dark"] {
+  --background: #09090b;
+  --foreground: #fafafa;
+  --muted: #a1a1aa;
+  --border: #27272a;
+  --surface: #18181b;
+  --accent: #a78bfa;
+  --accent-light: #c4b5fd;
+  --accent-dark: #7c3aed;
+  --accent-subtle: #1a1625;
+  --accent-muted: #2e1065;
+}
+
+/* System preference fallback when no toggle used */
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  :root:not([data-theme="light"]) {
+    --background: #09090b;
+    --foreground: #fafafa;
+    --muted: #a1a1aa;
+    --border: #27272a;
+    --surface: #18181b;
+    --accent: #a78bfa;
+    --accent-light: #c4b5fd;
+    --accent-dark: #7c3aed;
+    --accent-subtle: #1a1625;
+    --accent-muted: #2e1065;
   }
+}
+
+/* Selection highlight */
+::selection {
+  background-color: var(--accent);
+  color: white;
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+/* Headings use display font */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display), system-ui, sans-serif;
+}
+
+/* Hide default cursor on desktop when custom cursor is active */
+@media (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
+}
+
+/* ── Command palette scrollbar ── */
+[cmdk-list] {
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) transparent;
+}
+[cmdk-list]::-webkit-scrollbar {
+  width: 6px;
+}
+[cmdk-list]::-webkit-scrollbar-track {
+  background: transparent;
+}
+[cmdk-list]::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 9999px;
+}
+[cmdk-list]::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-dark);
+}
+
+/* ── Terminal glow pulse ── */
+@keyframes glow {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+/* ── Konami mode (5s easter egg) ── */
+.konami-mode * {
+  font-family: 'Courier New', monospace !important;
+  image-rendering: pixelated;
+}
+.konami-mode img {
+  filter: contrast(1.5) saturate(0) brightness(1.2);
+}
+.konami-mode {
+  --accent: #22c55e;
+  --accent-light: #4ade80;
+  --accent-dark: #16a34a;
 }

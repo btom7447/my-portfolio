@@ -35,6 +35,20 @@ export const Projects: CollectionConfig = {
       ],
     },
     {
+      name: 'tags',
+      type: 'array',
+      admin: {
+        description: 'Tags like SaaS, AI, E-commerce, etc.',
+      },
+      fields: [
+        {
+          name: 'tag',
+          type: 'text',
+          required: true,
+        },
+      ],
+    },
+    {
       name: 'summary',
       type: 'textarea',
       required: true,
@@ -52,6 +66,25 @@ export const Projects: CollectionConfig = {
       type: 'upload',
       relationTo: 'media',
       required: true,
+    },
+    {
+      name: 'gallery',
+      type: 'array',
+      admin: {
+        description: 'Additional screenshots and media for the case study',
+      },
+      fields: [
+        {
+          name: 'image',
+          type: 'upload',
+          relationTo: 'media',
+          required: true,
+        },
+        {
+          name: 'caption',
+          type: 'text',
+        },
+      ],
     },
     {
       name: 'deviceFrameType',
@@ -96,6 +129,22 @@ export const Projects: CollectionConfig = {
       admin: {
         position: 'sidebar',
         description: 'Show on homepage',
+      },
+    },
+    {
+      name: 'projectStatus',
+      type: 'select',
+      required: true,
+      defaultValue: 'live',
+      options: [
+        { label: '● Live', value: 'live' },
+        { label: '● In Development', value: 'development' },
+        { label: '● Degraded', value: 'degraded' },
+        { label: '● Down', value: 'down' },
+      ],
+      admin: {
+        position: 'sidebar',
+        description: 'Current status of the live project',
       },
     },
     {
