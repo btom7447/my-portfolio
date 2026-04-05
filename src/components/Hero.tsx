@@ -134,7 +134,7 @@ export function Hero({ headshot, headline, subtext, availableForWork = true }: H
   return (
     <section
       ref={container}
-      className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 pt-20"
+      className="relative flex min-h-[auto] flex-col items-center justify-center overflow-hidden px-6 pb-24 pt-28 sm:min-h-screen sm:pb-0 sm:pt-20"
     >
       {/* Cursor trail — hero only */}
       <CursorTrail />
@@ -256,7 +256,7 @@ export function Hero({ headshot, headline, subtext, availableForWork = true }: H
       {/* Scroll indicator */}
       <div
         data-hero="scroll"
-        className="absolute bottom-10 z-10 flex flex-col items-center gap-2"
+        className="absolute bottom-10 z-10 hidden flex-col items-center gap-2 sm:flex"
       >
         <span className="text-xs font-medium uppercase tracking-widest text-muted">
           Scroll

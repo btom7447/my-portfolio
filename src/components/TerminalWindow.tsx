@@ -115,7 +115,7 @@ export function TerminalWindow({ lines }: { lines: TerminalLine[] }) {
       {/* Terminal body */}
       <div
         ref={bodyRef}
-        className="max-h-[75vh] overflow-y-auto p-5 font-mono text-sm leading-relaxed"
+        className="terminal-body max-h-[75vh] overflow-y-auto p-5 font-mono text-sm leading-relaxed"
       >
         {/* Revealed lines */}
         {revealedLines.map((line, i) => (

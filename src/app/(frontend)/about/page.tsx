@@ -60,7 +60,7 @@ export default async function AboutPage() {
   const { docs: experienceDocs } = await payload.find({
     collection: 'experience',
     where: { status: { equals: 'published' } },
-    sort: '-createdAt',
+    sort: '-startDate',
     limit: 20,
   })
 
