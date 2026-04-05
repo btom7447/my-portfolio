@@ -46,6 +46,9 @@ const techIcons: Record<string, string> = {
   cloudinary: '/tech-icons/cloudinary.svg',
   resend: '/tech-icons/resend.svg',
   appwrite: '/tech-icons/appwrite.svg',
+  zustand: '/tech-icons/zustand.svg',
+  'helmet.js': '/tech-icons/helmetjs.svg',
+  'expo router': '/tech-icons/exporouter.svg',
 }
 
 export function getTechIcon(name: string): string | null {

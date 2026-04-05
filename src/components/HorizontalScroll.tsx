@@ -7,6 +7,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
 import { StatusBadge } from '@/components/StatusBadge'
+import { getTechIcon } from '@/lib/tech-icons'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -17,6 +18,7 @@ type Project = {
   summary: string
   category: string
   coverImage?: { url: string; alt: string }
+  techStack?: { tech: string }[]
   tags?: { tag: string }[]
   deviceFrameType?: 'browser' | 'phone' | 'tablet'
   projectStatus?: 'live' | 'development' | 'degraded' | 'down'
@@ -132,6 +134,36 @@ export function HorizontalScroll({ projects }: { projects: Project[] }) {
                       {tag}
                     </span>
                   ))}
+                </div>
+              )}
+              {project.techStack && project.techStack.length > 0 && (
+                <div className="mt-3 flex flex-wrap gap-1.5">
+                  {project.techStack.slice(0, 6).map(({ tech }) => {
+                    const icon = getTechIcon(tech)
+                    return icon ? (
+                      <img
+                        key={tech}
+                        src={icon}
+                        alt={tech}
+                        title={tech}
+                        className="h-4 w-4 opacity-50 transition-opacity group-hover:opacity-100"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <span
+                        key={tech}
+                        title={tech}
+                        className="flex h-4 w-4 items-center justify-center rounded text-[8px] font-bold text-accent/50"
+                      >
+                        {tech.charAt(0).toUpperCase()}
+                      </span>
+                    )
+                  })}
+                  {project.techStack.length > 6 && (
+                    <span className="flex h-4 items-center text-[10px] text-muted">
+                      +{project.techStack.length - 6}
+                    </span>
+                  )}
                 </div>
               )}
             </div>

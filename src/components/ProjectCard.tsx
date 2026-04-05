@@ -4,8 +4,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { StatusBadge } from '@/components/StatusBadge'
-import { getTechIcon } from '@/lib/tech-icons'
-
 type ProjectCardProps = {
   title: string
   slug: string
@@ -15,7 +13,6 @@ type ProjectCardProps = {
     url: string
     alt: string
   }
-  techStack?: { tech: string }[]
   tags?: { tag: string }[]
   deviceFrameType?: 'browser' | 'phone' | 'tablet'
   projectStatus?: 'live' | 'development' | 'degraded' | 'down'
@@ -28,7 +25,6 @@ export function ProjectCard({
   slug,
   category,
   coverImage,
-  techStack,
   tags,
   projectStatus,
   className = '',
@@ -83,37 +79,6 @@ export function ProjectCard({
               {category}
             </span>
           </div>
-          {/* Tech stack icons */}
-          {techStack && techStack.length > 0 && (
-            <div className="mt-1.5 flex flex-wrap gap-1">
-              {techStack.slice(0, 5).map(({ tech }) => {
-                const icon = getTechIcon(tech)
-                return icon ? (
-                  <img
-                    key={tech}
-                    src={icon}
-                    alt={tech}
-                    title={tech}
-                    className="h-4 w-4 opacity-60 transition-opacity group-hover:opacity-100"
-                    loading="lazy"
-                  />
-                ) : (
-                  <span
-                    key={tech}
-                    title={tech}
-                    className="flex h-4 w-4 items-center justify-center rounded text-[8px] font-bold text-accent/60"
-                  >
-                    {tech.charAt(0).toUpperCase()}
-                  </span>
-                )
-              })}
-              {techStack.length > 5 && (
-                <span className="flex h-4 items-center text-[10px] text-muted">
-                  +{techStack.length - 5}
-                </span>
-              )}
-            </div>
-          )}
           {tags && tags.length > 0 && (
             <div className="mt-1.5 flex flex-wrap gap-1">
               {tags.map(({ tag }) => (
