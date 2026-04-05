@@ -29,6 +29,18 @@ export const Experience: CollectionConfig = {
       },
     },
     {
+      name: 'startDate',
+      type: 'date',
+      required: true,
+      admin: {
+        date: {
+          pickerAppearance: 'monthOnly',
+          displayFormat: 'MMM yyyy',
+        },
+        description: 'Used for sorting — pick the month you started this role',
+      },
+    },
+    {
       name: 'workMode',
       type: 'select',
       options: [

@@ -41,6 +41,11 @@ const techIcons: Record<string, string> = {
   railway: '/tech-icons/railway.svg',
   paystack: '/tech-icons/paystack.svg',
   'claude code': '/tech-icons/claudecode.svg',
+  'c#': '/tech-icons/csharp.svg',
+  stripe: '/tech-icons/stripe.svg',
+  cloudinary: '/tech-icons/cloudinary.svg',
+  resend: '/tech-icons/resend.svg',
+  appwrite: '/tech-icons/appwrite.svg',
 }
 
 export function getTechIcon(name: string): string | null {

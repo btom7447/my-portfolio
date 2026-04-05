@@ -40,7 +40,7 @@ export default async function Home() {
     collection: 'projects',
     where: { status: { equals: 'published' } },
     sort: 'order',
-    limit: 6,
+    limit: 7,
   })
 
   const featured = featuredProjects[0]
@@ -78,7 +78,7 @@ export default async function Home() {
   const { docs: experienceDocs } = await payload.find({
     collection: 'experience',
     where: { status: { equals: 'published' } },
-    sort: '-order',
+    sort: '-startDate',
     limit: 20,
   })
 
@@ -145,6 +145,7 @@ export default async function Home() {
             slug: p.slug,
             summary: p.summary,
             category: p.category,
+            featured: p.featured ?? false,
             coverImage:
               typeof p.coverImage === 'object' && p.coverImage
                 ? { url: p.coverImage.url ?? '', alt: p.coverImage.alt }

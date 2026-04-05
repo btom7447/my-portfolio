@@ -18,15 +18,8 @@ type ProjectCardProps = {
   tags?: { tag: string }[]
   deviceFrameType?: 'browser' | 'phone' | 'tablet'
   projectStatus?: 'live' | 'development' | 'degraded' | 'down'
-  /** When true, the card manages its own bento grid spans */
-  selfSpan?: boolean
+  className?: string
 }
-
-const bentoSpans = {
-  browser: 'col-span-2 row-span-3',
-  phone: 'col-span-1 row-span-5',
-  tablet: 'col-span-1 row-span-4',
-} as const
 
 export function ProjectCard({
   title,
@@ -34,14 +27,13 @@ export function ProjectCard({
   category,
   coverImage,
   tags,
-  deviceFrameType = 'browser',
   projectStatus,
-  selfSpan = false,
+  className = '',
 }: ProjectCardProps) {
   return (
     <motion.div
       whileHover={{ y: -6, transition: { duration: 0.25, ease: 'easeOut' } }}
-      className={selfSpan ? bentoSpans[deviceFrameType] : 'h-full'}
+      className={className}
     >
       <Link
         href={`/work/${slug}`}
@@ -62,7 +54,7 @@ export function ProjectCard({
               alt={coverImage.alt || title}
               fill
               className="object-contain p-2 transition-transform duration-500 group-hover:scale-105"
-              sizes={deviceFrameType === 'phone' ? '25vw' : '50vw'}
+              sizes="(max-width: 640px) 100vw, 50vw"
             />
           ) : (
             <div className="flex h-full items-center justify-center">
@@ -74,7 +66,7 @@ export function ProjectCard({
         </div>
 
         {/* Info bar */}
-        <div className="border-t border-border p-4">
+        <div className="border-t border-border p-3 sm:p-4">
           <div className="flex items-center gap-2">
             <h3 className="flex-1 truncate font-display text-sm font-bold">
               {title}
