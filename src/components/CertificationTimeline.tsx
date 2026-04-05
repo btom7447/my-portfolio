@@ -182,7 +182,7 @@ export function CertificationTimeline({ items }: { items: Certification[] }) {
                 <div className="flex-1">
                   <div className="flex flex-col justify-between gap-1 sm:flex-row sm:items-center">
                     <h3 className="font-display text-lg font-bold">{cert.name}</h3>
-                    <span className="shrink-0 rounded-full bg-accent-subtle px-3 py-0.5 text-xs font-medium text-accent">
+                    <span className="w-fit shrink-0 rounded-full bg-accent-subtle px-3 py-0.5 text-xs font-medium text-accent">
                       {formatDate(cert.date)}
                     </span>
                   </div>

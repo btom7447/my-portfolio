@@ -105,12 +105,14 @@ export function Navbar() {
           </li>
         </ul>
 
-        {/* Mobile toggle */}
-        <button
-          onClick={() => setMobileOpen(!mobileOpen)}
-          className="relative z-50 flex flex-col gap-1.5 md:hidden"
-          aria-label="Toggle menu"
-        >
+        {/* Mobile controls */}
+        <div className="flex items-center gap-3 md:hidden">
+          <ThemeToggle />
+          <button
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="relative z-50 flex flex-col gap-1.5"
+            aria-label="Toggle menu"
+          >
           <motion.span
             animate={mobileOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
             className="block h-0.5 w-6 bg-foreground"
@@ -123,7 +125,8 @@ export function Navbar() {
             animate={mobileOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }}
             className="block h-0.5 w-6 bg-foreground"
           />
-        </button>
+          </button>
+        </div>
       </nav>
 
       {/* Mobile menu */}

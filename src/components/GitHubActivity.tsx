@@ -43,10 +43,10 @@ export function GitHubActivity() {
   return (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
       {/* Sparkline + last shipped */}
-      <div className="flex flex-col gap-3 rounded-2xl border border-border bg-background p-5 sm:col-span-2">
+      <div className="flex flex-col gap-3 rounded-2xl border border-border bg-background p-5 sm:col-span-2 lg:col-span-4">
         <div className="flex items-center justify-between">
           <p className="text-xs font-medium uppercase tracking-wider text-muted">
-            90-day activity
+            Year activity
           </p>
           <p className="text-xs text-muted">
             Last shipped{' '}
@@ -57,29 +57,29 @@ export function GitHubActivity() {
         </div>
         <svg
           width="100%"
-          height={40}
-          viewBox={`0 0 ${data.sparkline.length * 2} 40`}
+          height={48}
+          viewBox={`0 0 ${data.sparkline.length} 48`}
           preserveAspectRatio="none"
           className="shrink-0"
-          aria-label="90-day contribution sparkline"
+          aria-label="Year contribution sparkline"
         >
           {data.sparkline.map((count, i) => {
-            const barHeight = Math.max((count / max) * 32, 1)
+            const barHeight = Math.max((count / max) * 40, 1.5)
             const opacity = count === 0 ? 0.15 : 0.3 + (count / max) * 0.7
 
             return (
               <motion.rect
                 key={i}
-                x={i * 2}
-                y={40 - barHeight}
-                width={1.5}
+                x={i}
+                y={48 - barHeight}
+                width={0.8}
                 height={barHeight}
-                rx={0.5}
+                rx={0.4}
                 fill="currentColor"
                 className="text-accent"
                 style={{ opacity }}
-                initial={{ height: 0, y: 40 }}
-                animate={{ height: barHeight, y: 40 - barHeight }}
+                initial={{ height: 0, y: 48 }}
+                animate={{ height: barHeight, y: 48 - barHeight }}
                 transition={{ duration: 0.4, delay: i * 0.008, ease: 'easeOut' }}
               />
             )

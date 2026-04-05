@@ -8,6 +8,8 @@ import { FAQ } from '@/components/FAQ'
 import { TestimonialsSection } from '@/components/TestimonialsSection'
 import type { Metadata } from 'next'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Contact — Portfolio',
   description: 'Get in touch for project inquiries',

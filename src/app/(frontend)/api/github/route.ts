@@ -75,7 +75,7 @@ export async function GET() {
     const allDays = calendar.weeks
       .flatMap((w: { contributionDays: { contributionCount: number; date: string }[] }) => w.contributionDays)
 
-    const sparkline = allDays.slice(-90).map(
+    const sparkline = allDays.map(
       (d: { contributionCount: number }) => d.contributionCount,
     )
 

@@ -1,6 +1,8 @@
 import { getPayloadClient } from '@/lib/payload'
 import { TerminalWindow } from '@/components/TerminalWindow'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata = {
   title: '// you weren\'t supposed to find this',
   robots: 'noindex, nofollow',

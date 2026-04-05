@@ -13,6 +13,8 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 import { ExperienceSection } from '@/components/ExperienceSection'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'About — Portfolio',
   description: 'Full-stack web and mobile engineer',
@@ -58,7 +60,7 @@ export default async function AboutPage() {
   const { docs: experienceDocs } = await payload.find({
     collection: 'experience',
     where: { status: { equals: 'published' } },
-    sort: 'order',
+    sort: '-order',
     limit: 20,
   })
 

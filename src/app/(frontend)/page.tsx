@@ -14,6 +14,8 @@ import { GSAPProvider } from '@/components/GSAPProvider'
 import { GreetingToast } from '@/components/GreetingToast'
 import { Footer } from '@/components/Footer'
 
+export const dynamic = 'force-dynamic'
+
 export default async function Home() {
   const payload = await getPayloadClient()
 
@@ -76,7 +78,7 @@ export default async function Home() {
   const { docs: experienceDocs } = await payload.find({
     collection: 'experience',
     where: { status: { equals: 'published' } },
-    sort: 'order',
+    sort: '-order',
     limit: 20,
   })
 
