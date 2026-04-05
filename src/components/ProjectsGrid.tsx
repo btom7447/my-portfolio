@@ -107,6 +107,7 @@ export function ProjectsGrid({ projects }: { projects: Project[] }) {
                 tags={project.tags}
                 deviceFrameType={project.deviceFrameType || 'browser'}
                 projectStatus={project.projectStatus}
+                index={i}
                 className={bentoClasses[i]}
               />
             ) : (

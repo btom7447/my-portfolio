@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { StatusBadge } from '@/components/StatusBadge'
+import { getTechIcon } from '@/lib/tech-icons'
 
 type ProjectCardProps = {
   title: string
@@ -19,6 +20,7 @@ type ProjectCardProps = {
   deviceFrameType?: 'browser' | 'phone' | 'tablet'
   projectStatus?: 'live' | 'development' | 'degraded' | 'down'
   className?: string
+  index?: number
 }
 
 export function ProjectCard({
@@ -26,12 +28,18 @@ export function ProjectCard({
   slug,
   category,
   coverImage,
+  techStack,
   tags,
   projectStatus,
   className = '',
+  index = 0,
 }: ProjectCardProps) {
   return (
     <motion.div
+      initial={{ opacity: 0, scale: 0.85 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true, margin: '-40px' }}
+      transition={{ duration: 0.5, delay: index * 0.08, ease: 'easeOut' }}
       whileHover={{ y: -6, transition: { duration: 0.25, ease: 'easeOut' } }}
       className={className}
     >
@@ -75,6 +83,37 @@ export function ProjectCard({
               {category}
             </span>
           </div>
+          {/* Tech stack icons */}
+          {techStack && techStack.length > 0 && (
+            <div className="mt-1.5 flex flex-wrap gap-1">
+              {techStack.slice(0, 5).map(({ tech }) => {
+                const icon = getTechIcon(tech)
+                return icon ? (
+                  <img
+                    key={tech}
+                    src={icon}
+                    alt={tech}
+                    title={tech}
+                    className="h-4 w-4 opacity-60 transition-opacity group-hover:opacity-100"
+                    loading="lazy"
+                  />
+                ) : (
+                  <span
+                    key={tech}
+                    title={tech}
+                    className="flex h-4 w-4 items-center justify-center rounded text-[8px] font-bold text-accent/60"
+                  >
+                    {tech.charAt(0).toUpperCase()}
+                  </span>
+                )
+              })}
+              {techStack.length > 5 && (
+                <span className="flex h-4 items-center text-[10px] text-muted">
+                  +{techStack.length - 5}
+                </span>
+              )}
+            </div>
+          )}
           {tags && tags.length > 0 && (
             <div className="mt-1.5 flex flex-wrap gap-1">
               {tags.map(({ tag }) => (
