@@ -128,7 +128,16 @@ export const Projects: CollectionConfig = {
       defaultValue: false,
       admin: {
         position: 'sidebar',
-        description: 'Show on homepage',
+        description: 'Hero slot on homepage bento grid',
+      },
+    },
+    {
+      name: 'bentoGrid',
+      type: 'checkbox',
+      defaultValue: false,
+      admin: {
+        position: 'sidebar',
+        description: 'Include in homepage bento grid',
       },
     },
     {

@@ -38,9 +38,11 @@ export default async function Home() {
 
   const { docs: projects } = await payload.find({
     collection: 'projects',
-    where: { status: { equals: 'published' } },
+    where: {
+      bentoGrid: { equals: true },
+      status: { equals: 'published' },
+    },
     sort: 'order',
-    limit: 7,
   })
 
   const featured = featuredProjects[0]
