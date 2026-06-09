@@ -37,7 +37,7 @@ export function ProjectCard({
       viewport={{ once: true, margin: '-40px' }}
       transition={{ duration: 0.5, delay: index * 0.08, ease: 'easeOut' }}
       whileHover={{ y: -6, transition: { duration: 0.25, ease: 'easeOut' } }}
-      className={className}
+      className={`h-full ${className}`}
     >
       <Link
         href={`/work/${slug}`}
