@@ -23,9 +23,15 @@ const GITHUB_QUERY = `
         nodes {
           name
           pushedAt
-          primaryLanguage {
-            name
-            color
+          isFork
+          languages(first: 10) {
+            edges {
+              size
+              node {
+                name
+                color
+              }
+            }
           }
         }
       }
@@ -95,7 +101,13 @@ export async function GET() {
     }
 
     // Last shipped
-    const repos = user.repositories.nodes as { name: string; pushedAt: string; primaryLanguage: { name: string; color: string } | null }[]
+    type LangEdge = { size: number; node: { name: string; color: string | null } }
+    const repos = user.repositories.nodes as {
+      name: string
+      pushedAt: string
+      isFork: boolean
+      languages: { edges: LangEdge[] }
+    }[]
     const lastRepo = repos[0]
     let daysAgo = 0
     let repoName = ''
@@ -110,18 +122,20 @@ export async function GET() {
     // Public repo count
     const publicRepos = user.repositories.totalCount
 
-    // Top languages — count occurrences across repos
+    // Top languages — weight by bytes of code (like GitHub), not repo count.
+    // Counting each repo's primary language equally lets tiny coursework repos
+    // outweigh large apps; summing bytes reflects what's actually been written.
+    // Forks are excluded since that code wasn't authored here.
     const langMap = new Map<string, { count: number; color: string }>()
     for (const repo of repos) {
-      if (repo.primaryLanguage) {
-        const existing = langMap.get(repo.primaryLanguage.name)
+      if (repo.isFork) continue
+      for (const edge of repo.languages?.edges ?? []) {
+        const { name, color } = edge.node
+        const existing = langMap.get(name)
         if (existing) {
-          existing.count++
+          existing.count += edge.size
         } else {
-          langMap.set(repo.primaryLanguage.name, {
-            count: 1,
-            color: repo.primaryLanguage.color || '#8b8b8b',
-          })
+          langMap.set(name, { count: edge.size, color: color || '#8b8b8b' })
         }
       }
     }

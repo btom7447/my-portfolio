@@ -53,3 +53,6 @@ AGENTS.md
 # editor
 .vscode/
 .idea/
+
+# seed-assets (local only — one-off Boaflow logo + testimonial seed)
+/seed-assets/
