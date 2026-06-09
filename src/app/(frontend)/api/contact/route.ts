@@ -3,13 +3,13 @@ import { Resend } from 'resend'
 
 export const dynamic = 'force-dynamic'
 
-type Payload = { name: string; email: string; message: string }
+type Payload = { name: string; email: string; message: string; phone?: string }
 
 // --- Channel senders. Each returns void on success, throws on failure. ---
 // Each channel only runs if its env vars are present, so you can enable them
 // one at a time without touching code.
 
-async function sendEmail({ name, email, message }: Payload) {
+async function sendEmail({ name, email, phone, message }: Payload) {
   const apiKey = process.env.RESEND_API_KEY
   const to = process.env.CONTACT_EMAIL
   if (!apiKey || !to) throw new Error('email: not configured')
@@ -22,17 +22,17 @@ async function sendEmail({ name, email, message }: Payload) {
     to,
     replyTo: email,
     subject: `Portfolio: New message from ${name}`,
-    text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
+    text: `Name: ${name}\nEmail: ${email}${phone ? `\nPhone: ${phone}` : ''}\n\nMessage:\n${message}`,
   })
   if (error) throw new Error(`email: ${error.message}`)
 }
 
-async function sendTelegram({ name, email, message }: Payload) {
+async function sendTelegram({ name, email, phone, message }: Payload) {
   const token = process.env.TELEGRAM_BOT_TOKEN
   const chatId = process.env.TELEGRAM_CHAT_ID
   if (!token || !chatId) throw new Error('telegram: not configured')
 
-  const text = `New portfolio message\n\nFrom: ${name}\nEmail: ${email}\n\n${message}`
+  const text = `New portfolio message\n\nFrom: ${name}\nEmail: ${email}${phone ? `\nPhone: ${phone}` : ''}\n\n${message}`
   const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -41,27 +41,27 @@ async function sendTelegram({ name, email, message }: Payload) {
   if (!res.ok) throw new Error(`telegram: ${res.status} ${await res.text()}`)
 }
 
-async function sendWhatsApp({ name, email, message }: Payload) {
-  const phone = process.env.CALLMEBOT_PHONE // e.g. 2348012345678 (country code, no +)
+async function sendWhatsApp({ name, email, phone, message }: Payload) {
+  const toPhone = process.env.CALLMEBOT_PHONE // your number — e.g. 2348012345678 (country code, no +)
   const apiKey = process.env.CALLMEBOT_APIKEY
-  if (!phone || !apiKey) throw new Error('whatsapp: not configured')
+  if (!toPhone || !apiKey) throw new Error('whatsapp: not configured')
 
-  const text = `New portfolio message\nFrom: ${name}\nEmail: ${email}\n\n${message}`
+  const text = `New portfolio message\nFrom: ${name}\nEmail: ${email}${phone ? `\nPhone: ${phone}` : ''}\n\n${message}`
   const url =
-    `https://api.callmebot.com/whatsapp.php?phone=${encodeURIComponent(phone)}` +
+    `https://api.callmebot.com/whatsapp.php?phone=${encodeURIComponent(toPhone)}` +
     `&text=${encodeURIComponent(text)}&apikey=${encodeURIComponent(apiKey)}`
   const res = await fetch(url)
   if (!res.ok) throw new Error(`whatsapp: ${res.status} ${await res.text()}`)
 }
 
 export async function POST(req: Request) {
-  const { name, email, message } = (await req.json()) as Partial<Payload>
+  const { name, email, message, phone } = (await req.json()) as Partial<Payload>
 
   if (!name || !email || !message) {
     return NextResponse.json({ error: 'Missing fields' }, { status: 400 })
   }
 
-  const payload: Payload = { name, email, message }
+  const payload: Payload = { name, email, message, phone }
   const channels = [sendEmail, sendTelegram, sendWhatsApp]
 
   const results = await Promise.allSettled(channels.map((send) => send(payload)))

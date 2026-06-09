@@ -1,16 +1,24 @@
 'use client'
 
 import { useState } from 'react'
+import { toast } from 'sonner'
+import { countryCodes } from '@/lib/country-codes'
 
 export function ContactForm() {
-  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
+  const [sending, setSending] = useState(false)
+  const [country, setCountry] = useState('US')
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    setStatus('sending')
+    setSending(true)
 
     const form = e.currentTarget
     const data = new FormData(form)
+
+    // Phone is optional — only attach it (with the dial code) if a number was typed.
+    const number = (data.get('phone') as string)?.trim()
+    const dial = countryCodes.find((c) => c.code === country)?.dial
+    const phone = number ? `${dial} ${number}` : undefined
 
     try {
       const res = await fetch('/api/contact', {
@@ -19,18 +27,22 @@ export function ContactForm() {
         body: JSON.stringify({
           name: data.get('name'),
           email: data.get('email'),
+          phone,
           message: data.get('message'),
         }),
       })
 
       if (res.ok) {
-        setStatus('sent')
+        toast.success("Message sent! I'll get back to you soon.")
         form.reset()
+        setCountry('US')
       } else {
-        setStatus('error')
+        toast.error('Something went wrong. Please try again.')
       }
     } catch {
-      setStatus('error')
+      toast.error('Something went wrong. Please try again.')
+    } finally {
+      setSending(false)
     }
   }
 
@@ -63,6 +75,50 @@ export function ContactForm() {
         />
       </div>
       <div>
+        <label htmlFor="phone" className="mb-2 block text-sm font-medium">
+          Phone <span className="font-normal text-muted">(optional)</span>
+        </label>
+        <div className="flex gap-2">
+          <div className="relative shrink-0">
+            <select
+              aria-label="Country code"
+              value={country}
+              onChange={(e) => setCountry(e.target.value)}
+              className="h-full appearance-none rounded-lg border border-border bg-surface py-3 pl-4 pr-9 text-sm text-foreground focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
+            >
+              {countryCodes.map((c) => (
+                <option key={c.code} value={c.code}>
+                  {c.flag} {c.dial}
+                </option>
+              ))}
+            </select>
+            <svg
+              className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-muted"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <input
+            id="phone"
+            name="phone"
+            type="tel"
+            inputMode="tel"
+            autoComplete="tel-national"
+            className="w-full flex-1 rounded-lg border border-border bg-surface px-4 py-3 text-sm text-foreground placeholder:text-muted/50 focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
+            placeholder="801 234 5678"
+          />
+        </div>
+      </div>
+      <div>
         <label htmlFor="message" className="mb-2 block text-sm font-medium">
           Message
         </label>
@@ -78,22 +134,11 @@ export function ContactForm() {
 
       <button
         type="submit"
-        disabled={status === 'sending'}
+        disabled={sending}
         className="w-full rounded-full bg-accent px-8 py-3 text-sm font-medium text-white transition-colors hover:bg-accent-dark disabled:opacity-50"
       >
-        {status === 'sending' ? 'Sending...' : 'Send Message'}
+        {sending ? 'Sending...' : 'Send Message'}
       </button>
-
-      {status === 'sent' && (
-        <p className="text-center text-sm text-green-500">
-          Message sent! I&apos;ll get back to you soon.
-        </p>
-      )}
-      {status === 'error' && (
-        <p className="text-center text-sm text-red-500">
-          Something went wrong. Please try again.
-        </p>
-      )}
     </form>
   )
 }
